@@ -1,0 +1,26 @@
+format_version: 3
+pipelines:
+  test-pipeline:
+    group: defaultGroup
+    label_template: ${COUNT}
+    lock_behavior: none
+    materials:
+      git:
+        git: https://github.com/gocd-contrib/getting-started-repo.git
+        shallow_clone: false
+        auto_update: true
+        branch: master
+    stages:
+    - defaultStage:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+        jobs:
+          defaultJob:
+            timeout: 0
+            tasks:
+            - exec:
+                command: ./build
+                run_if: passed
